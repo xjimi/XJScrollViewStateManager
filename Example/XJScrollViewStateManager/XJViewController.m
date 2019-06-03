@@ -7,8 +7,11 @@
 //
 
 #import "XJViewController.h"
+#import <XJScrollViewStateManager/XJScrollViewStateManager.h>
 
 @interface XJViewController ()
+
+@property (nonatomic, strong) XJScrollViewStateManager *scrollViewStateManager;
 
 @end
 
@@ -17,13 +20,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    self.scrollViewStateManager = [XJScrollViewStateManager managerWithScrollView:nil];
+    [self.scrollViewStateManager addNetworkStatusChangeBlock:^(NetworkStatus netStatus) {
+        
+    }];
+
+    [self.scrollViewStateManager addPullToRefreshWithActionHandler:^{
+
+    }];
+
+    
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

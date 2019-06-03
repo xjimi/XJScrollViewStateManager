@@ -62,11 +62,11 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D463EBEFB02E7AB2D675B82 /* Pods_XJScrollViewStateManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJScrollViewStateManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8E9D0C79321AF600E7998027 /* XJScrollViewStateManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = XJScrollViewStateManager.podspec; path = ../XJScrollViewStateManager.podspec; sourceTree = "<group>"; };
-		A2A7DE161880D5A58866D324 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		8E9D0C79321AF600E7998027 /* XJScrollViewStateManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = XJScrollViewStateManager.podspec; path = ../XJScrollViewStateManager.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A2A7DE161880D5A58866D324 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A849C2F9B3E0AFAD785CBD64 /* Pods-XJScrollViewStateManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; path = "Target Support Files/Pods-XJScrollViewStateManager_Tests/Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C7E9F2DD956613A2C8A92DCE /* Pods_XJScrollViewStateManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJScrollViewStateManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E28BDBC1987C6CD7BB8DFD00 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E28BDBC1987C6CD7BB8DFD00 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +193,6 @@
 				A849C2F9B3E0AFAD785CBD64 /* Pods-XJScrollViewStateManager_Tests.debug.xcconfig */,
 				264307E356BC04321DED2B6F /* Pods-XJScrollViewStateManager_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -258,6 +257,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -304,12 +304,16 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XJScrollViewStateManager_Example/Pods-XJScrollViewStateManager_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/XJScrollViewStateManager/XJScrollViewStateManager.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJScrollViewStateManager.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
