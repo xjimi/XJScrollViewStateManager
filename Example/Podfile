@@ -4,10 +4,11 @@ platform :ios, '9.0'
 
 target 'XJScrollViewStateManager_Example' do
   pod 'XJScrollViewStateManager', :path => '../'
-
+  pod 'XJTableViewManager'
+  pod 'Masonry'
+  
   target 'XJScrollViewStateManager_Tests' do
     inherit! :search_paths
 
-    
   end
 end

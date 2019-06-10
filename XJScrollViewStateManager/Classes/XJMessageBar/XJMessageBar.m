@@ -86,7 +86,7 @@
     messageViewFrame.size.height = messageViewH;
     self.messageView.frame = messageViewFrame;
     
-    CGFloat messageBarPosY = (self.messageBarType == XJMessageBarTypeTop) ? 0.0f : vh - messageViewH;
+    CGFloat messageBarPosY = (self.messageBarType == XJMessageBarTypeTop) ? 0.0f - self.startPosY : vh - messageViewH;
     self.frame = CGRectMake(0, messageBarPosY, vw, messageViewH);
 }
 

@@ -14,7 +14,6 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* XJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* XJAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* XJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* XJViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -23,6 +22,12 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		9035E26D22A8E0DD000160C4 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035E26222A8E0DD000160C4 /* AlbumsViewController.m */; };
+		9035E26E22A8E0DD000160C4 /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035E26522A8E0DD000160C4 /* AlbumModel.m */; };
+		9035E26F22A8E0DD000160C4 /* AlbumHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035E26722A8E0DD000160C4 /* AlbumHeader.m */; };
+		9035E27022A8E0DD000160C4 /* AlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9035E26822A8E0DD000160C4 /* AlbumCell.xib */; };
+		9035E27122A8E0DD000160C4 /* AlbumHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9035E26B22A8E0DD000160C4 /* AlbumHeader.xib */; };
+		9035E27222A8E0DD000160C4 /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035E26C22A8E0DD000160C4 /* AlbumCell.m */; };
 		CCE7B636ECB853ADA0BFC221 /* Pods_XJScrollViewStateManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D463EBEFB02E7AB2D675B82 /* Pods_XJScrollViewStateManager_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,8 +55,6 @@
 		6003F59B195388D20070C39A /* XJScrollViewStateManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XJScrollViewStateManager-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* XJAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* XJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* XJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* XJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* XJScrollViewStateManager_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XJScrollViewStateManager_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -63,6 +66,16 @@
 		7D463EBEFB02E7AB2D675B82 /* Pods_XJScrollViewStateManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJScrollViewStateManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E9D0C79321AF600E7998027 /* XJScrollViewStateManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = XJScrollViewStateManager.podspec; path = ../XJScrollViewStateManager.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9035E26122A8E0DD000160C4 /* AlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsViewController.h; sourceTree = "<group>"; };
+		9035E26222A8E0DD000160C4 /* AlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsViewController.m; sourceTree = "<group>"; };
+		9035E26422A8E0DD000160C4 /* AlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumModel.h; sourceTree = "<group>"; };
+		9035E26522A8E0DD000160C4 /* AlbumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModel.m; sourceTree = "<group>"; };
+		9035E26722A8E0DD000160C4 /* AlbumHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumHeader.m; sourceTree = "<group>"; };
+		9035E26822A8E0DD000160C4 /* AlbumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumCell.xib; sourceTree = "<group>"; };
+		9035E26922A8E0DD000160C4 /* AlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
+		9035E26A22A8E0DD000160C4 /* AlbumHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeader.h; sourceTree = "<group>"; };
+		9035E26B22A8E0DD000160C4 /* AlbumHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumHeader.xib; sourceTree = "<group>"; };
+		9035E26C22A8E0DD000160C4 /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
 		A2A7DE161880D5A58866D324 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A849C2F9B3E0AFAD785CBD64 /* Pods-XJScrollViewStateManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; path = "Target Support Files/Pods-XJScrollViewStateManager_Tests/Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C7E9F2DD956613A2C8A92DCE /* Pods_XJScrollViewStateManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJScrollViewStateManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,9 +147,8 @@
 			children = (
 				6003F59C195388D20070C39A /* XJAppDelegate.h */,
 				6003F59D195388D20070C39A /* XJAppDelegate.m */,
+				9035E26022A8E0DD000160C4 /* Albums */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* XJViewController.h */,
-				6003F5A6195388D20070C39A /* XJViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -183,6 +195,39 @@
 				A2A7DE161880D5A58866D324 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		9035E26022A8E0DD000160C4 /* Albums */ = {
+			isa = PBXGroup;
+			children = (
+				9035E26122A8E0DD000160C4 /* AlbumsViewController.h */,
+				9035E26222A8E0DD000160C4 /* AlbumsViewController.m */,
+				9035E26322A8E0DD000160C4 /* Model */,
+				9035E26622A8E0DD000160C4 /* View */,
+			);
+			path = Albums;
+			sourceTree = "<group>";
+		};
+		9035E26322A8E0DD000160C4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9035E26422A8E0DD000160C4 /* AlbumModel.h */,
+				9035E26522A8E0DD000160C4 /* AlbumModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9035E26622A8E0DD000160C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9035E26722A8E0DD000160C4 /* AlbumHeader.m */,
+				9035E26822A8E0DD000160C4 /* AlbumCell.xib */,
+				9035E26922A8E0DD000160C4 /* AlbumCell.h */,
+				9035E26A22A8E0DD000160C4 /* AlbumHeader.h */,
+				9035E26B22A8E0DD000160C4 /* AlbumHeader.xib */,
+				9035E26C22A8E0DD000160C4 /* AlbumCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		9F7E9BEFF80C82C83B660020 /* Pods */ = {
@@ -247,6 +292,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = xjimi;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 4X5X5XJA6V;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -279,7 +327,9 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				9035E27022A8E0DD000160C4 /* AlbumCell.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				9035E27122A8E0DD000160C4 /* AlbumHeader.xib in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,21 +350,21 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XJScrollViewStateManager_Example/Pods-XJScrollViewStateManager_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/XJScrollViewStateManager/XJScrollViewStateManager.framework",
+				"${BUILT_PRODUCTS_DIR}/XJTableViewManager/XJTableViewManager.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJScrollViewStateManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJTableViewManager.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -372,8 +422,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9035E26D22A8E0DD000160C4 /* AlbumsViewController.m in Sources */,
+				9035E27222A8E0DD000160C4 /* AlbumCell.m in Sources */,
 				6003F59E195388D20070C39A /* XJAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* XJViewController.m in Sources */,
+				9035E26E22A8E0DD000160C4 /* AlbumModel.m in Sources */,
+				9035E26F22A8E0DD000160C4 /* AlbumHeader.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +555,7 @@
 			baseConfigurationReference = 12989CCBF23DA8E1E34317FE /* Pods-XJScrollViewStateManager_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4X5X5XJA6V;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJScrollViewStateManager/XJScrollViewStateManager-Prefix.pch";
 				INFOPLIST_FILE = "XJScrollViewStateManager/XJScrollViewStateManager-Info.plist";
@@ -517,6 +571,7 @@
 			baseConfigurationReference = 282A930246B725F3276D7ADE /* Pods-XJScrollViewStateManager_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4X5X5XJA6V;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XJScrollViewStateManager/XJScrollViewStateManager-Prefix.pch";
 				INFOPLIST_FILE = "XJScrollViewStateManager/XJScrollViewStateManager-Info.plist";

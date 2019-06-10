@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AR8-lL-fZa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="wQg-tq-qST">
+        <!--Navigation Controller-->
+        <scene sceneID="tO6-t0-t1c">
             <objects>
-                <viewController id="whP-gf-Uak" customClass="XJViewController" sceneMemberID="viewController">
+                <navigationController id="AR8-lL-fZa" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tUz-dz-n2F">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="oCa-sx-PHf" kind="relationship" relationship="rootViewController" id="JRm-BQ-5XN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h9v-mW-ozi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-914" y="276"/>
+        </scene>
+        <!--Albums View Controller-->
+        <scene sceneID="k1n-c9-rB3">
+            <objects>
+                <viewController id="oCa-sx-PHf" customClass="AlbumsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
-                        <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
+                        <viewControllerLayoutGuide type="top" id="VaH-7P-JxF"/>
+                        <viewControllerLayoutGuide type="bottom" id="zb9-3a-IJr"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
+                    <view key="view" contentMode="scaleToFill" id="CA0-oP-hWi" customClass="Update">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <navigationItem key="navigationItem" id="uCY-lA-dle"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3hd-wY-78g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="433"/>
+            <point key="canvasLocation" x="-86" y="276"/>
         </scene>
     </scenes>
 </document>

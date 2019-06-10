@@ -49,9 +49,10 @@ typedef NSUInteger SVInfiniteScrollingState;
 
 @property (nonatomic, assign) BOOL needDragToLoadMore;
 
-- (void)disableInfiniteScrolling;
 - (void)resetOriginalBottomInset:(CGFloat)bottomInset;
 - (void)refreshIndicatorView;
 - (void)showIndicatorView;
+- (void)reset;
+- (void)disable;
 
 @end

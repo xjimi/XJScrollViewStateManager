@@ -83,7 +83,6 @@ static char UIScrollViewPullToRefreshView;
         view.pullToRefreshActionHandler = actionHandler;
         view.scrollView = self;
         [self addSubview:view];
-        
         view.originalTopInset = self.contentInset.top;
         view.originalBottomInset = self.contentInset.bottom;
         view.position = position;
@@ -407,13 +406,22 @@ static char UIScrollViewPullToRefreshView;
 - (void)scrollViewDidScroll:(CGPoint)contentOffset {
     if(self.state != SVPullToRefreshStateLoading) {
         CGFloat scrollOffsetThreshold = 0;
-        switch (self.position) {
+        switch (self.position)
+        {
             case SVPullToRefreshPositionTop:
-                scrollOffsetThreshold = self.frame.origin.y - self.originalTopInset;
+            {
+                CGFloat adjustContentInsetTop = 0;
+                if (@available(iOS 11.0, *)) {
+                    adjustContentInsetTop = self.scrollView.adjustedContentInset.top;
+                }
+                scrollOffsetThreshold = self.frame.origin.y - self.originalTopInset - adjustContentInsetTop;
                 break;
+            }
             case SVPullToRefreshPositionBottom:
+            {
                 scrollOffsetThreshold = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height, 0.0f) + self.bounds.size.height + self.originalBottomInset;
                 break;
+            }
         }
         
         if(!self.scrollView.isDragging && self.state == SVPullToRefreshStateTriggered)
@@ -431,11 +439,14 @@ static char UIScrollViewPullToRefreshView;
         UIEdgeInsets contentInset;
         switch (self.position) {
             case SVPullToRefreshPositionTop:
+            {
                 offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
                 offset = MIN(offset, self.originalTopInset + self.bounds.size.height);
+                NSLog(@"offset : %f", offset);
                 contentInset = self.scrollView.contentInset;
                 self.scrollView.contentInset = UIEdgeInsetsMake(offset, contentInset.left, contentInset.bottom, contentInset.right);
                 break;
+            }
             case SVPullToRefreshPositionBottom:
                 if (self.scrollView.contentSize.height >= self.scrollView.bounds.size.height) {
                     offset = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height + self.bounds.size.height, 0.0f);

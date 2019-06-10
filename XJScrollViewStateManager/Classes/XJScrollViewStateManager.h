@@ -9,56 +9,56 @@
 #import <Foundation/Foundation.h>
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "XJNetworkStatusMonitor.h"
-#import "XJMessageBar.h"
 
-typedef enum : NSUInteger {
-    XJScrollViewState_Init,
-    XJScrollViewState_Loading,
-    XJScrollViewState_EmptyData,
-    XJScrollViewState_NetworkError,
-    
-    XJScrollViewState_PullToRefresh_Finish,
-    
-    XJScrollViewState_LoadMore_Normal,
-    XJScrollViewState_LoadMore_Loading,
-    XJScrollViewState_LoadMore_Finish,
-} XJScrollViewState;
-
+typedef NS_ENUM(NSUInteger, XJScrollViewState)
+{
+    XJScrollViewStateNone = 0,
+    XJScrollViewStateLoading = 1,
+    XJScrollViewStateEmptyData = 2,
+    XJScrollViewStateNetworkError,
+    XJScrollViewStatePullToRefreshLoading,
+    XJScrollViewStatePullToRefreshFinish,
+    XJScrollViewStateLoadMoreNormal,
+    XJScrollViewStateLoadMoreLoading,
+    XJScrollViewStateLoadMoreFinish
+};
 
 typedef void (^XJScrollViewDidTapNetworkErrorViewBlock)(void);
 
 @interface XJScrollViewStateManager : NSObject < DZNEmptyDataSetSource, DZNEmptyDataSetDelegate >
 
-@property (nonatomic, assign) XJScrollViewState state;
-@property (nonatomic, strong) XJMessageBar *messageBarTop;
-@property (nonatomic, copy)   NSString *noContentInfo;
+@property (nonatomic, assign, readonly) XJScrollViewState state;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle pullToRefreshIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadMoreIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadingViewIndicatorStyle;
-@property (nonatomic, strong) UIColor *emptyDataTextColor;
+@property (nonatomic, strong) UIColor * _Nullable emptyDataTextColor;
+@property (nonatomic, assign) CGFloat emptyDataVerticalOffset;
+@property (nonatomic, copy) NSString * _Nullable noContentInfo;
 
-+ (instancetype)managerWithScrollView:(UIScrollView *)scrollView;
++ (instancetype _Nullable )managerWithScrollView:(UIScrollView *_Nonnull)scrollView;
 
-- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler;
-- (void)addLoadMoreWithActionHandler:(void (^)(void))actionHandler;
-- (void)addDidTapNetworkErrorView:(XJScrollViewDidTapNetworkErrorViewBlock)didTapNetworkErrorViewBlock;
-- (void)addNetworkStatusChangeBlock:(void (^)(NetworkStatus netStatus))block;
+- (void)addNetworkStatusChangeBlock:(void (^ __nonnull)(NetworkStatus netStatus))block;
+- (void)addDidTapNetworkErrorView:(XJScrollViewDidTapNetworkErrorViewBlock _Nullable )didTapNetworkErrorViewBlock;
 
+- (void)addPullToRefreshWithActionHandler:(void (^ __nonnull)(void))actionHandler;
+- (void)addLoadMoreWithActionHandler:(void (^ __nonnull)(void))actionHandler;
 - (void)finishPullToRefresh;
-
 - (void)finishLoadMore;
-- (void)disableLoadMore;
 
+// 頁面初始化時，顯示的 Loading
 - (void)showLoading;
+
+// 增加資料時，請執行
 - (void)showLoadMore;
 - (void)showEmptyData;
 - (void)showNetworkError;
 - (void)showLoadMoreError;
+- (void)reloadEmptyDataSet;
 
+// 完全不顯示在上方的錯誤訊息
 - (void)disableMessageBarTop;
 
 - (BOOL)ifNeedRefreshData;
-
 - (BOOL)isEmptyData;
 
 @end
