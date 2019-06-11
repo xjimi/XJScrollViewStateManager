@@ -13,15 +13,21 @@
 @interface XJScrollViewStateManager ()
 
 @property (nonatomic, weak) UIScrollView *baseScrollView;
+
 @property (nonatomic, assign) XJScrollViewState state;
+
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
-@property (nonatomic, strong) Reachability *internetConnectionReach;
-@property (nonatomic, strong) XJNetworkStatusMonitor *networkStatusMonitor;
-@property (nonatomic, copy) XJScrollViewDidTapNetworkErrorViewBlock didTapNetworkErrorViewBlock;
+
 @property (nonatomic, strong) XJMessageBar *messageBarTop;
 
+@property (nonatomic, strong) XJNetworkStatusMonitor *networkStatusMonitor;
+
+@property (nonatomic, copy) XJScrollViewDidTapNetworkErrorViewBlock didTapNetworkErrorViewBlock;
+
 @property (nonatomic, copy) void (^pullToRefreshHandler)(void);
+
 @property (nonatomic, copy) void (^loadMoreHandler)(void);
+
 @property (nonatomic, copy) void (^networkStatusChangeBlock)(NetworkStatus status);
 
 @end
@@ -39,9 +45,6 @@
     {
         self.baseScrollView = scrollView;
         [self setup];
-        self.baseScrollView.emptyDataSetSource = self;
-        self.baseScrollView.emptyDataSetDelegate = self;
-        [self.baseScrollView reloadEmptyDataSet];
     }
     return self;
 }
@@ -49,55 +52,23 @@
 - (void)setup
 {
     self.state = XJScrollViewStateNone;
+    self.baseScrollView.emptyDataSetSource = self;
+    self.baseScrollView.emptyDataSetDelegate = self;
+    [self.baseScrollView reloadEmptyDataSet];
     self.emptyDataTextColor = [UIColor darkGrayColor];
     self.noContentInfo = @"#LInfo_NoContentYet";
-
-    /*
-     ref:http://mywayonobjectivec.blogspot.tw/2016/05/uiscrollview.html
-     如果你想讓你的scrollView以點擊事件為主：
-     yourScrollView.delaysContentTouches = NO
-     如果你想讓你的scrollView以滑動事件為主：
-     yourScrollView.delaysContentTouches = YES
-     */
     self.baseScrollView.delaysContentTouches = YES;
     self.pullToRefreshIndicatorStyle = UIActivityIndicatorViewStyleGray;
     self.loadMoreIndicatorStyle = UIActivityIndicatorViewStyleGray;
 }
 
-- (void)setPullToRefreshIndicatorStyle:(UIActivityIndicatorViewStyle)pullToRefreshIndicatorStyle {
-    _pullToRefreshIndicatorStyle = pullToRefreshIndicatorStyle;
-    [self.baseScrollView.pullToRefreshView setActivityIndicatorViewStyle:_pullToRefreshIndicatorStyle];
-}
-
-- (void)setLoadMoreIndicatorStyle:(UIActivityIndicatorViewStyle)loadMoreIndicatorStyle {
-    _loadMoreIndicatorStyle = loadMoreIndicatorStyle;
-    [self.baseScrollView.infiniteScrollingView setActivityIndicatorViewStyle:_loadMoreIndicatorStyle];
-}
-
-- (XJMessageBar *)messageBarTop
-{
-    if (!_messageBarTop)
-    {
-        _messageBarTop = [XJMessageBar messageBarType:XJMessageBarTypeTop dismissWhenTouch:NO showInView:self.baseScrollView.superview];
-        _messageBarTop.verticalPadding = 10.0f;
-        _messageBarTop.bgColor = [UIColor colorWithRed:0.7961 green:0.0431 blue:0.0902 alpha:1.0000];
-    }
-
-    return _messageBarTop;
-}
-
-- (void)setEmptyDataVerticalOffset:(CGFloat)emptyDataVerticalOffset
-{
-    _emptyDataVerticalOffset = emptyDataVerticalOffset;
-    self.messageBarTop.startPosY = emptyDataVerticalOffset;
-}
-
-- (void)addNetworkStatusChangeBlock:(void (^ _Nonnull)(NetworkStatus netStatus))block
+- (void)addNetworkStatusChangeBlock:(void (^)(NetworkStatus netStatus))block
 {
     if (self.networkStatusMonitor) return;
     __weak typeof(self)weakSelf = self;
-    self.networkStatusMonitor = [XJNetworkStatusMonitor monitorWithNetworkStatusChange:^(NetworkStatus status) {
-
+    self.networkStatusMonitor = [XJNetworkStatusMonitor
+                                 monitorWithNetworkStatusChange:^(NetworkStatus status)
+    {
         if (status == NotReachable)
         {
             [weakSelf showNetworkError];
@@ -123,7 +94,7 @@
     }];
 }
 
-- (void)addPullToRefreshWithActionHandler:(void (^ __nonnull)(void))actionHandler
+- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler
 {
     if (self.baseScrollView.pullToRefreshView) return;
     self.pullToRefreshHandler = actionHandler;
@@ -154,11 +125,11 @@
     });
 }
 
-- (void)addLoadMoreWithActionHandler:(void (^ _Nonnull)(void))actionHandler
+- (void)addLoadMoreWithActionHandler:(void (^)(void))actionHandler
 {
     if (self.baseScrollView.infiniteScrollingView) return;
     self.loadMoreHandler = actionHandler;
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
         __weak typeof(self)weakSelf = self;
         [self.baseScrollView addInfiniteScrollingWithActionHandler:^{
@@ -166,7 +137,7 @@
             if ([weakSelf isLoadingData])
             {
                 weakSelf.baseScrollView.showsInfiniteScrolling = NO;
-                [weakSelf.messageBarTop showMessage:@"#資料讀取中...請稍候" autoDismiss:NO];
+                [weakSelf.messageBarTop showMessage:@"#LInfo_Loading" autoDismiss:NO];
             }
             else
             {
@@ -228,8 +199,10 @@
     [self.messageBarTop hide];
     [self.baseScrollView.pullToRefreshView stopAnimating];
     [self.baseScrollView reloadEmptyDataSet];
-    if (self.baseScrollView.infiniteScrollingView) {
+    if (self.baseScrollView.infiniteScrollingView)
+    {
         self.baseScrollView.showsInfiniteScrolling = YES;
+        [self.baseScrollView.infiniteScrollingView stopAnimating];
     }
 }
 
@@ -309,7 +282,6 @@
     return nil;
 }
 
-
 - (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView {
     return YES;
 }
@@ -364,24 +336,8 @@
     return [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
 }
 
-- (UIView *)loadingView
-{
-    if (!_loadingView)
-    {
-        _loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [_loadingView startAnimating];
-    }
-    return _loadingView;
-}
-
 - (void)reloadEmptyDataSet {
     [self.baseScrollView reloadEmptyDataSet];
-}
-
-- (void)setLoadingViewIndicatorStyle:(UIActivityIndicatorViewStyle)loadingViewIndicatorStyle
-{
-    UIActivityIndicatorView *activityView = [self.loadingView viewWithTag:101];
-    activityView.activityIndicatorViewStyle = loadingViewIndicatorStyle;
 }
 
 - (BOOL)isEmptyData {
@@ -427,6 +383,53 @@
 
     return items;
 }
+
+#pragma mark - Set UI property
+
+- (void)setPullToRefreshIndicatorStyle:(UIActivityIndicatorViewStyle)pullToRefreshIndicatorStyle
+{
+    _pullToRefreshIndicatorStyle = pullToRefreshIndicatorStyle;
+    [self.baseScrollView.pullToRefreshView setActivityIndicatorViewStyle:_pullToRefreshIndicatorStyle];
+}
+
+- (void)setLoadMoreIndicatorStyle:(UIActivityIndicatorViewStyle)loadMoreIndicatorStyle
+{
+    _loadMoreIndicatorStyle = loadMoreIndicatorStyle;
+    [self.baseScrollView.infiniteScrollingView setActivityIndicatorViewStyle:_loadMoreIndicatorStyle];
+}
+
+- (void)setLoadingViewIndicatorStyle:(UIActivityIndicatorViewStyle)loadingViewIndicatorStyle {
+    self.loadingView.activityIndicatorViewStyle = loadingViewIndicatorStyle;
+}
+
+- (void)setEmptyDataVerticalOffset:(CGFloat)emptyDataVerticalOffset
+{
+    _emptyDataVerticalOffset = emptyDataVerticalOffset;
+    self.messageBarTop.startPosY = emptyDataVerticalOffset;
+}
+
+- (XJMessageBar *)messageBarTop
+{
+    if (!_messageBarTop)
+    {
+        _messageBarTop = [XJMessageBar messageBarType:XJMessageBarTypeTop dismissWhenTouch:NO showInView:self.baseScrollView.superview];
+        _messageBarTop.verticalPadding = 10.0f;
+        _messageBarTop.bgColor = [UIColor colorWithRed:0.7961 green:0.0431 blue:0.0902 alpha:1.0000];
+    }
+
+    return _messageBarTop;
+}
+
+- (UIView *)loadingView
+{
+    if (!_loadingView)
+    {
+        _loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [_loadingView startAnimating];
+    }
+    return _loadingView;
+}
+
 
 - (NSString *)stringState:(XJScrollViewState)state
 {

@@ -10,6 +10,8 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "XJNetworkStatusMonitor.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, XJScrollViewState)
 {
     XJScrollViewStateNone = 0,
@@ -31,34 +33,53 @@ typedef void (^XJScrollViewDidTapNetworkErrorViewBlock)(void);
 @property (nonatomic, assign) UIActivityIndicatorViewStyle pullToRefreshIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadMoreIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadingViewIndicatorStyle;
-@property (nonatomic, strong) UIColor * _Nullable emptyDataTextColor;
-@property (nonatomic, assign) CGFloat emptyDataVerticalOffset;
-@property (nonatomic, copy) NSString * _Nullable noContentInfo;
+@property (nonatomic, strong, nullable)  UIColor *emptyDataTextColor;
+@property (nonatomic, assign)  CGFloat emptyDataVerticalOffset;
+@property (nonatomic, copy, nullable)  NSString *noContentInfo;
 
-+ (instancetype _Nullable )managerWithScrollView:(UIScrollView *_Nonnull)scrollView;
++ (instancetype)managerWithScrollView:(UIScrollView *)scrollView;
 
-- (void)addNetworkStatusChangeBlock:(void (^ __nonnull)(NetworkStatus netStatus))block;
-- (void)addDidTapNetworkErrorView:(XJScrollViewDidTapNetworkErrorViewBlock _Nullable )didTapNetworkErrorViewBlock;
+/** 監聽網路狀態是否改變 **/
+- (void)addNetworkStatusChangeBlock:(void (^)(NetworkStatus netStatus))block;
+- (void)addDidTapNetworkErrorView:(XJScrollViewDidTapNetworkErrorViewBlock)didTapNetworkErrorViewBlock;
 
-- (void)addPullToRefreshWithActionHandler:(void (^ __nonnull)(void))actionHandler;
-- (void)addLoadMoreWithActionHandler:(void (^ __nonnull)(void))actionHandler;
+/** 監聽是否觸發 - 下拉重整 **/
+- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler;
+
+/** 監聽是否觸發 - Load More **/
+- (void)addLoadMoreWithActionHandler:(void (^)(void))actionHandler;
+
+/** 恢復下拉重整功能 **/
 - (void)finishPullToRefresh;
+
+/** 結束 Load More 功能 **/
 - (void)finishLoadMore;
 
-// 頁面初始化時，顯示的 Loading
+/** 還未載入資料時,scrollView 中央顯示的 Loading **/
 - (void)showLoading;
 
-// 增加資料時，請執行
+/** 讀取資料完成時,需重置才能繼續讀取下一次資料 **/
 - (void)showLoadMore;
+
+/** 顯示無資料時的狀態 **/
 - (void)showEmptyData;
+
+/** 顯示網路連線錯誤 **/
 - (void)showNetworkError;
 - (void)showLoadMoreError;
+
+/** 更新物件位置 **/
 - (void)reloadEmptyDataSet;
 
-// 完全不顯示在上方的錯誤訊息
+/** 關閉上方的錯誤提示訊息 **/
 - (void)disableMessageBarTop;
 
+/** 檢查是否需要更新資料 **/
 - (BOOL)ifNeedRefreshData;
+
+/** 檢查 DataSource 的資料是否為空 **/
 - (BOOL)isEmptyData;
 
 @end
+
+NS_ASSUME_NONNULL_END

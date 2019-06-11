@@ -48,11 +48,11 @@
     self.scrollViewState.emptyDataVerticalOffset = -64;
     self.scrollViewState.noContentInfo = @"No Content yet";
     __weak typeof(self)weakSelf = self;
-
+    [self refreshData];
     [self.scrollViewState addNetworkStatusChangeBlock:^(NetworkStatus netStatus) {
 
         if (netStatus != NotReachable) {
-            [weakSelf refreshData];
+            //[weakSelf refreshData];
         } else {
             [weakSelf.scrollViewState showNetworkError];
         }
@@ -90,7 +90,7 @@
         [self callAPILoadMoreWithCompletion:^{
 
             if (weakSelf.retryCount > 4)
-            {
+            { 
                 weakSelf.retryCount = 0;
                 [weakSelf.scrollViewState finishLoadMore];
                 return;
