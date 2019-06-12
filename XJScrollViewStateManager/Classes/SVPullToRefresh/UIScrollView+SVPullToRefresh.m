@@ -9,6 +9,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "UIScrollView+SVPullToRefresh.h"
+#import "UIImage+XJPodsResources.h"
+#import "XJScrollViewStateManager.h"
 
 //fequal() and fequalzro() from http://stackoverflow.com/a/1614761/184130
 #define fequal(a,b) (fabs((a) - (b)) < FLT_EPSILON)
@@ -442,7 +444,6 @@ static char UIScrollViewPullToRefreshView;
             {
                 offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
                 offset = MIN(offset, self.originalTopInset + self.bounds.size.height);
-                NSLog(@"offset : %f", offset);
                 contentInset = self.scrollView.contentInset;
                 self.scrollView.contentInset = UIEdgeInsetsMake(offset, contentInset.left, contentInset.bottom, contentInset.right);
                 break;
@@ -706,9 +707,10 @@ static char UIScrollViewPullToRefreshView;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        
-        self.imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PullToRefreshArrow"]];
+    if (self)
+    {
+        UIImage *image = [UIImage xj_podsImageNamed:@"PullToRefreshArrow"];
+        self.imgView = [[UIImageView alloc] initWithImage:image];
         self.imgView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         [self addSubview:self.imgView];
     }

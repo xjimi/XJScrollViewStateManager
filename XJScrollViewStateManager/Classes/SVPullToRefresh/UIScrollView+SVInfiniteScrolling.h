@@ -52,7 +52,5 @@ typedef NSUInteger SVInfiniteScrollingState;
 - (void)resetOriginalBottomInset:(CGFloat)bottomInset;
 - (void)refreshIndicatorView;
 - (void)showIndicatorView;
-- (void)reset;
-- (void)disable;
 
 @end

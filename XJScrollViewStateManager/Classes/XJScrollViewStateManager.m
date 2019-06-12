@@ -9,6 +9,8 @@
 #import "XJScrollViewStateManager.h"
 #import "SVPullToRefresh.h"
 #import "XJMessageBar.h"
+#import "UIImage+XJPodsResources.h"
+#import "NSString+XJPodsResources.h"
 
 @interface XJScrollViewStateManager ()
 
@@ -29,6 +31,8 @@
 @property (nonatomic, copy) void (^loadMoreHandler)(void);
 
 @property (nonatomic, copy) void (^networkStatusChangeBlock)(NetworkStatus status);
+
+@property (nonatomic, strong) UIView *customErrorView;
 
 @end
 
@@ -56,7 +60,6 @@
     self.baseScrollView.emptyDataSetDelegate = self;
     [self.baseScrollView reloadEmptyDataSet];
     self.emptyDataTextColor = [UIColor darkGrayColor];
-    self.noContentInfo = @"#LInfo_NoContentYet";
     self.baseScrollView.delaysContentTouches = YES;
     self.pullToRefreshIndicatorStyle = UIActivityIndicatorViewStyleGray;
     self.loadMoreIndicatorStyle = UIActivityIndicatorViewStyleGray;
@@ -106,7 +109,7 @@
             if ([weakSelf isLoadingData])
             {
                 [weakSelf.baseScrollView.pullToRefreshView stopAnimating];
-                [weakSelf.messageBarTop showMessage:@"#LInfo_DataLoading" autoDismiss:YES];
+                [weakSelf.messageBarTop showMessage:LLoading autoDismiss:YES];
             }
             else
             {
@@ -137,7 +140,7 @@
             if ([weakSelf isLoadingData])
             {
                 weakSelf.baseScrollView.showsInfiniteScrolling = NO;
-                [weakSelf.messageBarTop showMessage:@"#LInfo_Loading" autoDismiss:NO];
+                [weakSelf.messageBarTop showMessage:LLoading autoDismiss:NO];
             }
             else
             {
@@ -181,13 +184,13 @@
 {
     [self finishPullToRefreshWithState:XJScrollViewStateNetworkError];
     if (![self isEmptyData]) {
-        [self.messageBarTop showMessage:@"#LInfo_NetworkError"];
+        [self.messageBarTop showMessage:LNetworkError];
     }
 }
 
 - (void)showLoadMoreError
 {
-    [self.messageBarTop showMessage:@"#LInfo_NetworkError"];
+    [self.messageBarTop showMessage:LNetworkError];
     self.baseScrollView.infiniteScrollingView.needDragToLoadMore = YES;
     [self finishLoadMoreWithState:XJScrollViewStateNetworkError];
     [self.baseScrollView.infiniteScrollingView showIndicatorView];
@@ -248,6 +251,11 @@
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if ([self.delegate respondsToSelector:@selector(customViewForEmptyDataState:)]) {
+        UIView *view = [self.delegate customViewForEmptyDataState:self];
+        if (view) return view;
+    }
+
     if (self.state == XJScrollViewStateNone || [self isLoadingData]) {
         return self.loadingView;
     }
@@ -256,8 +264,22 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if ([self.delegate respondsToSelector:@selector(imageForEmptyDataState:)]) {
+        UIImage *image = [self.delegate imageForEmptyDataState:self];
+        if (image) return image;
+    }
+
     if (self.state == XJScrollViewStateNetworkError) {
-        return [UIImage imageNamed:@"ic_networkError_dark"];
+        return [UIImage xj_podsImageNamed:@"ic_reload"];
+    }
+    return nil;
+}
+
+- (UIColor *)imageTintColorForEmptyDataSet:(UIScrollView *)scrollView
+{
+    if ([self.delegate respondsToSelector:@selector(imageTintColorForEmptyDataState:)]) {
+        UIColor *color = [self.delegate imageTintColorForEmptyDataState:self];
+        if (color) return color;
     }
 
     return nil;
@@ -265,17 +287,27 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if ([self.delegate respondsToSelector:@selector(titleForEmptyDataState:)]) {
+        NSAttributedString *string = [self.delegate titleForEmptyDataState:self];
+        if (string) return string;
+    }
+
     if (self.state == XJScrollViewStateNetworkError) {
-        return [self attributedStringWithString:@"#LInfo_NetworkError"];
+        return [self attributedStringWithString:LNetworkError];
     }
     else if (self.state == XJScrollViewStateEmptyData) {
-        return [self attributedStringWithString:self.noContentInfo];
+        return [self attributedStringWithString:LNoContentYet];
     }
     return nil;
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView
 {
+    if ([self.delegate respondsToSelector:@selector(descriptionForEmptyDataState:)]) {
+        NSAttributedString *string = [self.delegate descriptionForEmptyDataState:self];
+        if (string) return string;
+    }
+
     if (self.state == XJScrollViewStateNetworkError) {
         //return [self mutableAttributedStringWithString:LInfo_NetworkError];
     }

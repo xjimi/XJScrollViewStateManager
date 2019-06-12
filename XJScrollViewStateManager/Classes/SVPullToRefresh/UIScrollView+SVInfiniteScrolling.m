@@ -115,16 +115,6 @@ UIEdgeInsets scrollViewOriginalContentInsets;
     return !self.infiniteScrollingView.hidden;
 }
 
-- (void)reset
-{
-    self.showsInfiniteScrolling = YES;
-    [self.infiniteScrollingView stopAnimating];
-}
-
-- (void)disable {
-    self.showsInfiniteScrolling = NO;
-}
-
 @end
 
 

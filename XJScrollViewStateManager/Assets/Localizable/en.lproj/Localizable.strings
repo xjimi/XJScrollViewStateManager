@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by XJIMI on 2019/6/12.
+  
+*/
+
+"LNoContentYet" = "No Content yet";
+"LLoading"      = "Loading";
+"LNetworkError" = "Network Error";

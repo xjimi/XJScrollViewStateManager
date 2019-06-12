@@ -14,7 +14,7 @@
 #import <XJTableViewManager/XJTableViewManager.h>
 #import <XJScrollViewStateManager/XJScrollViewStateManager.h>
 
-@interface AlbumsViewController () < XJTableViewDelegate >
+@interface AlbumsViewController () < XJTableViewDelegate, XJScrollViewStateDelegate >
 
 @property (nonatomic, strong) XJTableViewManager *tableView;
 
@@ -45,14 +45,13 @@
 - (void)createScrollViewState
 {
     self.scrollViewState = [XJScrollViewStateManager managerWithScrollView:self.tableView];
+    self.scrollViewState.delegate = self;
     self.scrollViewState.emptyDataVerticalOffset = -64;
-    self.scrollViewState.noContentInfo = @"No Content yet";
     __weak typeof(self)weakSelf = self;
-    [self refreshData];
     [self.scrollViewState addNetworkStatusChangeBlock:^(NetworkStatus netStatus) {
 
         if (netStatus != NotReachable) {
-            //[weakSelf refreshData];
+            [weakSelf refreshData];
         } else {
             [weakSelf.scrollViewState showNetworkError];
         }
@@ -68,6 +67,7 @@
 
 - (void)refreshData
 {
+    self.retryCount = 0;
     [self.scrollViewState finishPullToRefresh];
     self.tableView.data = @[[self createDataModel]].mutableCopy;
 
@@ -83,13 +83,14 @@
 
 - (void)loadMoreData
 {
+    NSLog(@"loadMoreData ---- ");
     self.retryCount ++;
-    if (self.retryCount % 2)
+    if (self.retryCount % 3)
     {
         __weak typeof(self)weakSelf = self;
         [self callAPILoadMoreWithCompletion:^{
 
-            if (weakSelf.retryCount > 4)
+            if (weakSelf.retryCount > 6)
             { 
                 weakSelf.retryCount = 0;
                 [weakSelf.scrollViewState finishLoadMore];

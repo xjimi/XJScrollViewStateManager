@@ -28,6 +28,7 @@
 		9035E27022A8E0DD000160C4 /* AlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9035E26822A8E0DD000160C4 /* AlbumCell.xib */; };
 		9035E27122A8E0DD000160C4 /* AlbumHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9035E26B22A8E0DD000160C4 /* AlbumHeader.xib */; };
 		9035E27222A8E0DD000160C4 /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9035E26C22A8E0DD000160C4 /* AlbumCell.m */; };
+		904DC80322B10B4C00787D58 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 904DC80522B10B4C00787D58 /* Localizable.strings */; };
 		CCE7B636ECB853ADA0BFC221 /* Pods_XJScrollViewStateManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D463EBEFB02E7AB2D675B82 /* Pods_XJScrollViewStateManager_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,10 @@
 		9035E26A22A8E0DD000160C4 /* AlbumHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeader.h; sourceTree = "<group>"; };
 		9035E26B22A8E0DD000160C4 /* AlbumHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumHeader.xib; sourceTree = "<group>"; };
 		9035E26C22A8E0DD000160C4 /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
+		904DC7FF22B109BD00787D58 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		904DC80022B109BE00787D58 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		904DC80422B10B4C00787D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		904DC80622B10B5000787D58 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A2A7DE161880D5A58866D324 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A849C2F9B3E0AFAD785CBD64 /* Pods-XJScrollViewStateManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; path = "Target Support Files/Pods-XJScrollViewStateManager_Tests/Pods-XJScrollViewStateManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C7E9F2DD956613A2C8A92DCE /* Pods_XJScrollViewStateManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJScrollViewStateManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +169,7 @@
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* XJScrollViewStateManager-Prefix.pch */,
+				904DC80522B10B4C00787D58 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -308,6 +314,7 @@
 				English,
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = 6003F581195388D10070C39A;
 			productRefGroup = 6003F58B195388D20070C39A /* Products */;
@@ -328,6 +335,7 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				9035E27022A8E0DD000160C4 /* AlbumCell.xib in Resources */,
+				904DC80322B10B4C00787D58 /* Localizable.strings in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				9035E27122A8E0DD000160C4 /* AlbumHeader.xib in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -462,6 +470,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6003F5B9195388D20070C39A /* en */,
+				904DC80022B109BE00787D58 /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -470,8 +479,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				71719F9E1E33DC2100824A3D /* Base */,
+				904DC7FF22B109BD00787D58 /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		904DC80522B10B4C00787D58 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				904DC80422B10B4C00787D58 /* en */,
+				904DC80622B10B5000787D58 /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

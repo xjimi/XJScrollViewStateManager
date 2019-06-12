@@ -12,6 +12,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class XJScrollViewStateManager;
+
+@protocol XJScrollViewStateDelegate <NSObject>
+
+@optional
+
+- (UIView *)customViewForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
+
+- (UIImage *)imageForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
+- (UIColor *)imageTintColorForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
+
+- (NSAttributedString *)titleForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
+- (NSAttributedString *)descriptionForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
+
+@end
+
 typedef NS_ENUM(NSUInteger, XJScrollViewState)
 {
     XJScrollViewStateNone = 0,
@@ -29,13 +45,13 @@ typedef void (^XJScrollViewDidTapNetworkErrorViewBlock)(void);
 
 @interface XJScrollViewStateManager : NSObject < DZNEmptyDataSetSource, DZNEmptyDataSetDelegate >
 
+@property (nonatomic, weak) id <XJScrollViewStateDelegate> delegate;
 @property (nonatomic, assign, readonly) XJScrollViewState state;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle pullToRefreshIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadMoreIndicatorStyle;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadingViewIndicatorStyle;
 @property (nonatomic, strong, nullable)  UIColor *emptyDataTextColor;
 @property (nonatomic, assign)  CGFloat emptyDataVerticalOffset;
-@property (nonatomic, copy, nullable)  NSString *noContentInfo;
 
 + (instancetype)managerWithScrollView:(UIScrollView *)scrollView;
 

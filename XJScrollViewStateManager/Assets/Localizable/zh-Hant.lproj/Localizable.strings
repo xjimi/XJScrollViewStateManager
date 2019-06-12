@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by XJIMI on 2019/6/12.
+  
+*/
+
+"LNoContentYet" = "尚無內容";
+"LLoading"      = "讀取中";
+"LNetworkError" = "網路連線錯誤";

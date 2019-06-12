@@ -22,12 +22,11 @@ Pod::Spec.new do |s|
   s.source_files = 'XJScrollViewStateManager/Classes/**/*'
   s.dependency 'DZNEmptyDataSet'
   s.dependency 'Reachability'
-
   s.frameworks = 'UIKit', 'Foundation'
+  s.resource_bundles = { 'resource_image' => ['XJScrollViewStateManager/Assets/*.png'],
+                         'resource_localizable' => ['XJScrollViewStateManager/Assets/Localizable/*.lproj/*']
 
-  # s.resource_bundles = {
-  #   'XJScrollViewStateManager' => ['XJScrollViewStateManager/Assets/*.png']
-  # }
-
+  }
+  
   # s.public_header_files = 'Pod/Classes/**/*.h'
 end
