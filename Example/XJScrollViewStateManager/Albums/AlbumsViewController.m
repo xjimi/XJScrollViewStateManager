@@ -51,7 +51,9 @@
     [self.scrollViewState addNetworkStatusChangeBlock:^(NetworkStatus netStatus) {
 
         if (netStatus != NotReachable) {
-            [weakSelf refreshData];
+            //[weakSelf refreshData];
+            [weakSelf.scrollViewState showNetworkError];
+
         } else {
             [weakSelf.scrollViewState showNetworkError];
         }
@@ -69,7 +71,7 @@
 {
     self.retryCount = 0;
     [self.scrollViewState finishPullToRefresh];
-    self.tableView.data = @[[self createDataModel]].mutableCopy;
+    [self.tableView refreshDataModel:[self createDataModel]];
 
     __weak typeof(self)weakSelf = self;
     [self.scrollViewState addPullToRefreshWithActionHandler:^{
@@ -135,7 +137,7 @@
 
 - (XJTableViewHeaderModel *)createSection
 {
-    NSString *setion = [NSString stringWithFormat:@"New Album %ld", (long)self.tableView.data.count];
+    NSString *setion = [NSString stringWithFormat:@"New Album %ld", (long)self.tableView.allDataModels.count];
     XJTableViewHeaderModel *headerModel = [XJTableViewHeaderModel
                                            modelWithReuseIdentifier:[AlbumHeader identifier]
                                            headerHeight:50.0f
@@ -205,7 +207,7 @@
 - (IBAction)insertSectionData
 {
     XJTableViewDataModel *dataModel = [self createDataModel];
-    [self.tableView insertDataModel:dataModel atSectionIndex:self.tableView.data.count];
+    [self.tableView insertDataModel:dataModel atSectionIndex:self.tableView.allDataModels.count];
 }
 
 #pragma mark - XJTableView delegate

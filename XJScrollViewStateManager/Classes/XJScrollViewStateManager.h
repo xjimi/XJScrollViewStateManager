@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
-#import "XJNetworkStatusMonitor.h"
+#import <XJUtil/XJNetworkStatusMonitor.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

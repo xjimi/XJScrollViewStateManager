@@ -270,7 +270,7 @@
     }
 
     if (self.state == XJScrollViewStateNetworkError) {
-        return [UIImage xj_podsImageNamed:@"ic_reload"];
+        return [UIImage xj_podsImageNamed:@"ic_reload_dark"];
     }
     return nil;
 }
@@ -337,7 +337,7 @@
 
     NSMutableDictionary *attributes = [NSMutableDictionary new];
     text = string;
-    font = [UIFont systemFontOfSize:16];
+    font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
     textColor = self.emptyDataTextColor;
 
     if (font) [attributes setObject:font forKey:NSFontAttributeName];
