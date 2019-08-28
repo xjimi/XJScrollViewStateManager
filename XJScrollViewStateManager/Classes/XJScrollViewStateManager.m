@@ -9,8 +9,7 @@
 #import "XJScrollViewStateManager.h"
 #import "SVPullToRefresh.h"
 #import "XJMessageBar.h"
-#import "UIImage+XJPodsResources.h"
-#import "NSString+XJPodsResources.h"
+#import "XJScrollViewStateBundleResource.h"
 
 @interface XJScrollViewStateManager ()
 
@@ -109,7 +108,8 @@
             if ([weakSelf isLoadingData])
             {
                 [weakSelf.baseScrollView.pullToRefreshView stopAnimating];
-                [weakSelf.messageBarTop showMessage:LLoading autoDismiss:YES];
+                NSString *message = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LLoading"];
+                [weakSelf.messageBarTop showMessage:message autoDismiss:YES];
             }
             else
             {
@@ -140,7 +140,8 @@
             if ([weakSelf isLoadingData])
             {
                 weakSelf.baseScrollView.showsInfiniteScrolling = NO;
-                [weakSelf.messageBarTop showMessage:LLoading autoDismiss:NO];
+                NSString *message = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LLoading"];
+                [weakSelf.messageBarTop showMessage:message autoDismiss:NO];
             }
             else
             {
@@ -183,14 +184,17 @@
 - (void)showNetworkError
 {
     [self finishPullToRefreshWithState:XJScrollViewStateNetworkError];
-    if (![self isEmptyData]) {
-        [self.messageBarTop showMessage:LNetworkError];
+    if (![self isEmptyData])
+    {
+        NSString *message = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LNetworkError"];
+        [self.messageBarTop showMessage:message];
     }
 }
 
 - (void)showLoadMoreError
 {
-    [self.messageBarTop showMessage:LNetworkError];
+    NSString *message = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LNetworkError"];
+    [self.messageBarTop showMessage:message];
     self.baseScrollView.infiniteScrollingView.needDragToLoadMore = YES;
     [self finishLoadMoreWithState:XJScrollViewStateNetworkError];
     [self.baseScrollView.infiniteScrollingView showIndicatorView];
@@ -270,7 +274,7 @@
     }
 
     if (self.state == XJScrollViewStateNetworkError) {
-        return [UIImage xj_podsImageNamed:@"ic_reload_dark"];
+        return [XJScrollViewStateBundleResource imageNamed:@"ic_reload_dark"];
     }
     return nil;
 }
@@ -292,11 +296,15 @@
         if (string) return string;
     }
 
-    if (self.state == XJScrollViewStateNetworkError) {
-        return [self attributedStringWithString:LNetworkError];
+    if (self.state == XJScrollViewStateNetworkError)
+    {
+        NSString *networkError = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LNetworkError"];
+        return [self attributedStringWithString:networkError];
     }
-    else if (self.state == XJScrollViewStateEmptyData) {
-        return [self attributedStringWithString:LNoContentYet];
+    else if (self.state == XJScrollViewStateEmptyData)
+    {
+        NSString *noContent = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LNoContentYet"];
+        return [self attributedStringWithString:noContent];
     }
     return nil;
 }

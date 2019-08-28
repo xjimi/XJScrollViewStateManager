@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
   s.dependency 'XJUtil'
 
   s.resource_bundles = {
-      'resource_image' => ['XJScrollViewStateManager/Assets/*.xcassets'],
-      'resource_localizable' => ['XJScrollViewStateManager/Assets/Localizable/*.lproj/*']
+      s.name + '_resource_image' => ['XJScrollViewStateManager/Assets/*.xcassets'],
+      s.name + '_resource_localizable' => ['XJScrollViewStateManager/Assets/Localizable/*.lproj/*']
   }
   
   # s.public_header_files = 'Pod/Classes/**/*.h'
