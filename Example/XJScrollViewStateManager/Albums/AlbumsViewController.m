@@ -14,7 +14,7 @@
 #import <XJTableViewManager/XJTableViewManager.h>
 #import <XJScrollViewStateManager/XJScrollViewStateManager.h>
 
-@interface AlbumsViewController () < XJTableViewDelegate, XJScrollViewStateDelegate >
+@interface AlbumsViewController () < XJTableViewDelegate >
 
 @property (nonatomic, strong) XJTableViewManager *tableView;
 
@@ -37,7 +37,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self.scrollViewState reloadEmptyDataSet];
+    //[self.scrollViewState reloadEmptyDataSet];
 }
 
 #pragma mark - Create XJScrollViewState
@@ -45,24 +45,41 @@
 - (void)createScrollViewState
 {
     self.scrollViewState = [XJScrollViewStateManager managerWithScrollView:self.tableView];
-    self.scrollViewState.delegate = self;
-    self.scrollViewState.emptyDataVerticalOffset = -64;
+    CGFloat offset = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    offset += CGRectGetHeight(self.navigationController.navigationBar.frame);
+    
+    // setup messageBar
+    self.scrollViewState.messageBar.startPosY = -offset;
+    //self.scrollViewState.messageBar.dismissWhenTouch = YES;
+    
+    // setup emptyDataSet
     __weak typeof(self)weakSelf = self;
-    [self.scrollViewState addNetworkStatusChangeBlock:^(NetworkStatus netStatus) {
-
-        if (netStatus != NotReachable) {
-            //[weakSelf refreshData];
-            [weakSelf.scrollViewState showNetworkError];
-
-        } else {
-            [weakSelf.scrollViewState showNetworkError];
-        }
-
+    [self.scrollViewState emptyDataSetConfigBlock:^(XJEmptyDataSetConfig * _Nonnull config) {
+        //可對 XJEmptyDataSetConfig 做屬性的修正
+        
+        config.props.emptyVerticalOffset = -offset;
+        
+        config.emptyBtnTapBlock = ^(UIButton * _Nonnull btn) {
+            NSLog(@"emptyBtnTapBlock");
+        };
+        
+        config.emptyViewTapBlock = ^(UIView * _Nonnull view) {
+            
+            [weakSelf.scrollViewState showLoading];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf refreshData];
+            });
+        };
     }];
 
-    [self.scrollViewState addDidTapNetworkErrorView:^{
-        [weakSelf callAPIRefresh];
-    }];
+    [self.scrollViewState showLoading];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+            [self.scrollViewState showNetworkError];
+        
+    });
+    
 }
 
 #pragma mark - Create XJTableView and dataModel
@@ -74,11 +91,11 @@
     [self.tableView refreshDataModel:[self createDataModel]];
 
     __weak typeof(self)weakSelf = self;
-    [self.scrollViewState addPullToRefreshWithActionHandler:^{
+    [self.scrollViewState pullToRefreshBlock:^{
         [weakSelf callAPIRefresh];
     }];
 
-    [self.scrollViewState addLoadMoreWithActionHandler:^{
+    [self.scrollViewState loadMoreBlock:^{
         [weakSelf loadMoreData];
     }];
 }
@@ -130,7 +147,7 @@
 - (XJTableViewDataModel *)createDataModel
 {
     XJTableViewDataModel *dataModel = [XJTableViewDataModel
-                                       modelWithSection:nil
+                                       modelWithHeader:nil
                                        rows:[self createRows]];
     return dataModel;
 }
@@ -191,7 +208,7 @@
 {
     XJTableViewHeaderModel *section = nil;
     XJTableViewDataModel *newDataModel = [XJTableViewDataModel
-                                          modelWithSection:section
+                                          modelWithHeader:section
                                           rows:[self createRows]];
     [self.tableView appendRowsWithDataModel:newDataModel];
 }
@@ -199,7 +216,7 @@
 - (IBAction)appendDataModel
 {
     XJTableViewDataModel *newDataModel = [XJTableViewDataModel
-                                          modelWithSection:[self createSection]
+                                          modelWithHeader:[self createSection]
                                           rows:[self createRows]];
     [self.tableView appendDataModel:newDataModel];
 }
@@ -214,7 +231,13 @@
 
 - (void)xj_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@", indexPath);
+    if (indexPath.row % 2)
+    {
+        self.scrollViewState.messageBar.font = [UIFont systemFontOfSize:16];
+        [self.scrollViewState.messageBar showMessage:@"網路連線異常"];
+    } else {
+        [self.scrollViewState.messageBar hide];
+    }
 }
 
 @end

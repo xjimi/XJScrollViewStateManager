@@ -13,7 +13,6 @@
 @property (nonatomic, strong) UIView *messageView;
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) NSTimer *autoDismissTimer;
-@property (nonatomic, assign) BOOL dismissWhenTouch;
 @property (nonatomic, weak) UIView *view;
 
 
@@ -43,17 +42,17 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.clipsToBounds = YES;
-        self.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = NO;
-        [self createMessageBar];
         [self setup];
+        [self createMessageBar];
     }
     return self;
 }
 
 - (void)setup
 {
+    self.clipsToBounds = YES;
+    self.backgroundColor = [UIColor clearColor];
+    self.userInteractionEnabled = NO;
     self.bgColor = [[UIColor blackColor] colorWithAlphaComponent:.8];
     self.textColor = [UIColor whiteColor];
     self.dismissTimeInterval = 3;
@@ -96,29 +95,43 @@
     [self addSubview:messageView];
     self.messageView = messageView;
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMessageBar)];
-    tapGesture.numberOfTapsRequired = 1;
-    [self addGestureRecognizer:tapGesture];
-    
     UILabel *messageLabel = [[UILabel alloc] init];
     messageLabel.font = [UIFont systemFontOfSize:13.0f];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
     messageLabel.numberOfLines = 0;
-    
+    messageLabel.textColor = self.textColor;
     [self.messageView addSubview:messageLabel];
     self.messageLabel = messageLabel;
 }
 
-- (void)setFont:(UIFont *)font {
+- (void)setDismissWhenTouch:(BOOL)dismissWhenTouch
+{
+    if (_dismissWhenTouch == dismissWhenTouch) return;
+    
+    _dismissWhenTouch = dismissWhenTouch;
+    if (dismissWhenTouch) {
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapMessageBar)];
+        tapGesture.numberOfTapsRequired = 1;
+        [self addGestureRecognizer:tapGesture];
+    }
+}
+
+- (void)setFont:(UIFont *)font
+{
+    _font = font;
     self.messageLabel.font = font;
 }
 
-- (void)setTextColor:(UIColor *)textColor {
+- (void)setTextColor:(UIColor *)textColor
+{
+    _textColor = textColor;
     self.messageLabel.textColor = textColor;
 }
 
-- (void)setBgColor:(UIColor *)bgColor {
+- (void)setBgColor:(UIColor *)bgColor
+{
+    _bgColor = bgColor;
     self.messageView.backgroundColor = bgColor;
 }
 
@@ -146,7 +159,7 @@
             
             weakSelf.userInteractionEnabled = YES;
             if (autoDismiss) {
-                weakSelf.autoDismissTimer = [NSTimer scheduledTimerWithTimeInterval:weakSelf.dismissTimeInterval target:weakSelf selector:@selector(hide) userInfo:nil repeats:NO];
+                [self createTimer];
             }
             
         }];
@@ -166,7 +179,7 @@
         
         CGRect messageViewFrame = self.messageView.frame;
         messageViewFrame.origin.y = 0;
-        [UIView animateWithDuration:0.4 delay:0 options:(7 << 16) animations:^{
+        [UIView animateWithDuration:0.3 delay:0 options:(7 << 16) animations:^{
             
             weakSelf.messageView.frame = messageViewFrame;
             
@@ -190,7 +203,7 @@
     CGRect messageBarFrame = self.messageView.frame;
     messageBarFrame.origin.y = messageBarFrame.size.height;
 
-    [UIView animateWithDuration:0.4 delay:0 options:(7 << 16) animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:(7 << 16) animations:^{
         
         self.messageView.frame = messageBarFrame;
         
@@ -204,8 +217,7 @@
 
 - (void)hideWithCompletion:(void (^)(void))completion
 {
-    [self.autoDismissTimer invalidate];
-    self.autoDismissTimer = nil;
+    [self invalidateTimer];
     
     [self setNeedsLayout];
     [self layoutIfNeeded];
@@ -234,7 +246,18 @@
     if (self.dismissWhenTouch) [self hide];
 }
 
+- (void)createTimer
+{
+    [self invalidateTimer];
+    self.autoDismissTimer = [NSTimer timerWithTimeInterval:self.dismissTimeInterval target:self selector:@selector(hide) userInfo:nil repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:self.autoDismissTimer forMode:NSRunLoopCommonModes];
+}
 
+- (void)invalidateTimer
+{
+    [self.autoDismissTimer invalidate];
+    self.autoDismissTimer = nil;
+}
 
 - (void)removeMessageBar
 {
@@ -242,6 +265,7 @@
         [self removeGestureRecognizer:recognizer];
     }
     
+    [self invalidateTimer];
     [self removeFromSuperview];
     [self.messageLabel removeFromSuperview];
     self.messageLabel = nil;

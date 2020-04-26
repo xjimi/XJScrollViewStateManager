@@ -7,26 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
-#import <XJUtil/XJNetworkStatusMonitor.h>
+#import "UIScrollView+XJEmptyDataSet.h"
+#import "XJMessageBar.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class XJScrollViewStateManager;
-
-@protocol XJScrollViewStateDelegate <NSObject>
-
-@optional
-
-- (UIView *)customViewForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
-
-- (UIImage *)imageForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
-- (UIColor *)imageTintColorForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
-
-- (NSAttributedString *)titleForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
-- (NSAttributedString *)descriptionForEmptyDataState:(XJScrollViewStateManager *)scrollViewState;
-
-@end
 
 typedef NS_ENUM(NSUInteger, XJScrollViewState)
 {
@@ -35,35 +19,32 @@ typedef NS_ENUM(NSUInteger, XJScrollViewState)
     XJScrollViewStateEmptyData = 2,
     XJScrollViewStateNetworkError,
     XJScrollViewStatePullToRefreshLoading,
-    XJScrollViewStatePullToRefreshFinish,
+    XJScrollViewStatePullToRefreshFinished,
     XJScrollViewStateLoadMoreNormal,
     XJScrollViewStateLoadMoreLoading,
-    XJScrollViewStateLoadMoreFinish
+    XJScrollViewStateLoadMoreFinished
 };
 
-typedef void (^XJScrollViewDidTapNetworkErrorViewBlock)(void);
+@interface XJScrollViewStateManager : NSObject
 
-@interface XJScrollViewStateManager : NSObject < DZNEmptyDataSetSource, DZNEmptyDataSetDelegate >
-
-@property (nonatomic, weak) id <XJScrollViewStateDelegate> delegate;
 @property (nonatomic, assign, readonly) XJScrollViewState state;
+
 @property (nonatomic, assign) UIActivityIndicatorViewStyle pullToRefreshIndicatorStyle;
+
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadMoreIndicatorStyle;
+
 @property (nonatomic, assign) UIActivityIndicatorViewStyle loadingViewIndicatorStyle;
-@property (nonatomic, strong, nullable)  UIColor *emptyDataTextColor;
-@property (nonatomic, assign)  CGFloat emptyDataVerticalOffset;
+
+@property (nonatomic, strong) XJMessageBar *messageBar;
+
+/** 檢查 DataSource 的資料是否為空 **/
+@property (nonatomic, assign, readonly) BOOL isEmptyData;
+
+/** 檢查是否需要更新資料 **/
+@property (nonatomic, assign, readonly) BOOL ifNeededRefreshData;
+
 
 + (instancetype)managerWithScrollView:(UIScrollView *)scrollView;
-
-/** 監聽網路狀態是否改變 **/
-- (void)addNetworkStatusChangeBlock:(void (^)(NetworkStatus netStatus))block;
-- (void)addDidTapNetworkErrorView:(XJScrollViewDidTapNetworkErrorViewBlock)didTapNetworkErrorViewBlock;
-
-/** 監聽是否觸發 - 下拉重整 **/
-- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler;
-
-/** 監聽是否觸發 - Load More **/
-- (void)addLoadMoreWithActionHandler:(void (^)(void))actionHandler;
 
 /** 恢復下拉重整功能 **/
 - (void)finishPullToRefresh;
@@ -84,17 +65,19 @@ typedef void (^XJScrollViewDidTapNetworkErrorViewBlock)(void);
 - (void)showNetworkError;
 - (void)showLoadMoreError;
 
-/** 更新物件位置 **/
-- (void)reloadEmptyDataSet;
+/** 關閉上方提示訊息 **/
+- (void)disableMessageBar;
 
-/** 關閉上方的錯誤提示訊息 **/
-- (void)disableMessageBarTop;
+#pragma mark - Blocks
 
-/** 檢查是否需要更新資料 **/
-- (BOOL)ifNeedRefreshData;
+/** 修改 DZNEmptyDataSet 屬性 **/
+- (void)emptyDataSetConfigBlock:(void (^)(XJEmptyDataSetConfig *config))configBlock;
 
-/** 檢查 DataSource 的資料是否為空 **/
-- (BOOL)isEmptyData;
+/** 監聽是否觸發 - 下拉重整 **/
+- (void)pullToRefreshBlock:(void (^)(void))block;
+
+/** 監聽是否觸發 - Load More **/
+- (void)loadMoreBlock:(void (^)(void))block;
 
 @end
 

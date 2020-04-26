@@ -22,6 +22,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat horizontalPadding;
 @property (nonatomic, assign) CGFloat verticalPadding;
 @property (nonatomic, assign) CGFloat startPosY;
+@property (nonatomic, assign) BOOL dismissWhenTouch;
 
 @property (nonatomic, assign) XJMessageBarType messageBarType;
 
