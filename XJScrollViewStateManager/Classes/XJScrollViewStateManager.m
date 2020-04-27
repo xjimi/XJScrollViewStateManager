@@ -53,8 +53,6 @@
     __weak typeof(self)weakSelf = self;
     [self.baseScrollView emptyDataSetConfigBlock:^(XJEmptyDataSetConfig * _Nonnull config) {
 
-        !weakSelf.emptyDataSetBlock ? :weakSelf.emptyDataSetBlock(config);
-
         if (weakSelf.state == XJScrollViewStateNetworkError)
         {
             NSString *networkError = [XJScrollViewStateBundleResource LocalizedStringWithKey:@"LNetworkError"];
@@ -70,6 +68,8 @@
         {
             config.props.customView = weakSelf.loadingView;
         }
+        
+        !weakSelf.emptyDataSetBlock ? :weakSelf.emptyDataSetBlock(config);
 
     }];
     /*

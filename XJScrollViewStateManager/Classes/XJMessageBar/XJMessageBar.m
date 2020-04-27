@@ -57,7 +57,7 @@
     self.textColor = [UIColor whiteColor];
     self.dismissTimeInterval = 3;
     self.horizontalPadding = 10.0f;
-    self.verticalPadding = 15.0f;
+    self.verticalPadding = 10.0f;
 }
 
 - (void)layoutSubviews
@@ -96,7 +96,7 @@
     self.messageView = messageView;
     
     UILabel *messageLabel = [[UILabel alloc] init];
-    messageLabel.font = [UIFont systemFontOfSize:13.0f];
+    messageLabel.font = [UIFont systemFontOfSize:15.0f weight:UIFontWeightBold];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
     messageLabel.numberOfLines = 0;

@@ -231,9 +231,7 @@
 
 - (void)xj_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row % 2)
-    {
-        self.scrollViewState.messageBar.font = [UIFont systemFontOfSize:16];
+    if (indexPath.row % 2) {
         [self.scrollViewState.messageBar showMessage:@"網路連線異常"];
     } else {
         [self.scrollViewState.messageBar hide];

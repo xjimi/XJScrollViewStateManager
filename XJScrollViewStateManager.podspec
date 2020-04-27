@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XJScrollViewStateManager'
-  s.version          = '0.1.12'
+  s.version          = '0.1.13'
   s.summary          = 'A short description of XJScrollViewStateManager.'
   s.homepage         = 'https://github.com/xjimi/XJScrollViewStateManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
